@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 선언적 렌더링 -->
+    <div id="app11">
+        {{ message342 }}
+    </div>
+    <!-- v-bind -->
+    <div id="app22">
+        <span v-bind:title="date">
+            title 바인딩
+        </span>
+        <!-- F12 >> 콘솔창에 app2.date = '@' 입력 >> title 속성값이 @로 변경 -->
+    </div>
+
+    <!-- 조건문과 반복문 -->
+    <!-- v-if -->
+    <div id="app33">
+        <p v-if="seen">볼 수 있는 글</p>
+    </div>
+    <!-- v-for -->
+    <div id="app44">
+        <ol>
+            <li v-for="a in b">
+                {{ a.text }}
+            </li>
+        </ol>
+        <!-- 콘솔창에 app4.b.push({ text: 'New item' }) 입력 >> 4. New item 추가 -->
+    </div>
+
+    <!-- 사용자 입력 핸들링 -->
+    <!-- v-on -->
+    <div id="app55">
+        <p>{{ m }}</p>
+        <button v-on:click="reverse">메시지 뒤집기</button>
+    </div>
+    <!-- v-model -->
+    <div id="app66">
+        <p>{{ m }}</p>
+        <input v-model="m">
+    </div>
+
+    <!-- 컴포넌트를 사용한 작성방법 -->
+    <div id="app77">
+        <ol>
+            <t-item
+                v-for="a in b"
+                v-bind:t="a"
+                v-bind:key="a.id"
+            ></t-item>
+        </ol>
+    </div>
+
+    <script>
+        // 선언적 렌더링
+        var app1 = new Vue({
+            el: '#app11',
+            data: {
+                message342: 'hello Vue!!'
+            }
+        })
+        // v-bind
+        var app2 = new Vue({
+            el: '#app22',
+            data: {
+                date: '로드된 날짜 : ' + new Date()
+            }
+        })
+
+        // 조건문과 반복문
+        // v-if
+        var app3 = new Vue({
+            el: '#app33',
+            data: {
+                seen: true
+                // true >> false 가 되면 보이지 않음
+            }
+        })
+        // v-for
+        var app4 = new Vue({
+            el: '#app44',
+            data: {
+                b: [
+                    { text: 'JavaScript' },
+                    { text: 'React' },
+                    { text: 'Vue'}
+                ]
+            }
+        })
+
+        // 사용자 입력 핸들링
+        // v-on
+        var app5 = new Vue({
+            el: '#app55',
+            data: {
+                m: 'Hi Vue!'
+            },
+            methods: {
+                reverse: function () {
+                    this.m = this.m.split('').reverse().join('')
+                }
+            }
+        })
+        // v-model
+        var app6 = new Vue({
+            el: '#app66',
+            data: {
+                m: 'Vue Study'
+            }
+        })
+
+        // 컴포넌트를 사용한 작성방법
+        // 컴포넌트 생성
+        Vue.component('t-item', {
+            props: ['t'],
+            template: '<li>{{ t.text }}</li>'
+        })
+
+        var app7 = new Vue({
+            el: '#app77',
+            data: {
+                b: [
+                    { id: 0, text: 'JavaScript study' },
+                    { id: 1, text: 'React study' },
+                    { id: 2, text: 'Vue study'}
+                ]
+            }
+        })
+    </script>
+</body>
+</html>
